@@ -1,9 +1,12 @@
 package com.xbl.sqlbear;
 
+import com.xbl.sqlbear.util.DbDriverMapper;
+
 public class Configuration {
     private String url;
     private String user;
     private String password;
+    private String driver;
 
     public static String SCRIPTS_FOLDER = "./scripts";
     public static String CONFIG_FOLDER = "./config";
@@ -11,10 +14,18 @@ public class Configuration {
     public Configuration() {
     }
 
+    public Configuration(String url, String user, String password, String driver) {
+        this.url = url;
+        this.user = user;
+        this.password = password;
+        this.driver = driver;
+    }
+
     public Configuration(String url, String user, String password) {
         this.url = url;
         this.user = user;
         this.password = password;
+        this.driver = DbDriverMapper.getDiverName(url);
     }
 
     public String getUrl() {
@@ -41,11 +52,29 @@ public class Configuration {
         this.password = password;
     }
 
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Configuration configuration = (Configuration)obj;
         return this.password.equals(configuration.password)
                     && this.url.equals(configuration.url)
-                    && this.password.equals(configuration.password);
+                    && this.password.equals(configuration.password)
+                    && this.driver.equals(configuration.driver);
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                    .append("url:").append(this.url).append(",")
+                    .append("user:").append(this.user).append(",")
+                    .append("password:").append(this.password).append(",")
+                    .append("driver:").append(this.driver).toString();
     }
 }
