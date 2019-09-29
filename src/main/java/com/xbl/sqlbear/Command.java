@@ -1,7 +1,6 @@
 package com.xbl.sqlbear;
 
 import com.xbl.sqlbear.util.ConfigUtils;
-import com.xbl.sqlbear.util.Output;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 import java.io.*;

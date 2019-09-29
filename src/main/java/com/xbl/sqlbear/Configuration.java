@@ -8,7 +8,6 @@ public class Configuration {
     private String password;
     private String driver;
 
-    public static String SCRIPTS_FOLDER = "./scripts";
     public static String CONFIG_FOLDER = "./config";
 
     public Configuration() {
