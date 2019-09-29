@@ -24,6 +24,7 @@ public class Command {
         }
         ScriptRunner runner = new ScriptRunner(getConnection());
         runner.runScript(fileReader);
+        runner.closeConnection();
     }
 
     private static void exit(String message) {
