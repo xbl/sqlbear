@@ -26,14 +26,12 @@ jobs:
       with:
         name: dist
         path: build/libs
-  publish:
-    steps:
-      - name: Deploy to sqlbear-starter
-        uses: seanmiddleditch/gha-publish-to-git@master
-        with:
-          repository: xbl/sqlbear-starter
-          branch: master
-          github_token: '${{ secrets.token }}'
-          source_folder: build/libs
-          target_folder: jars
+    - name: Deploy to sqlbear-starter
+      uses: seanmiddleditch/gha-publish-to-git@master
+      with:
+        repository: xbl/sqlbear-starter
+        branch: master
+        github_token: '${{ secrets.token }}'
+        source_folder: build/libs
+        target_folder: jars
 
