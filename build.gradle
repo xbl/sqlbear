@@ -18,7 +18,8 @@ dependencies {
 }
 
 // build all compile dependence jar in jar
-task buildFatJar(type: Jar) {
-    archiveBaseName = 'sqlbear-all-in-one-jar'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+jar {
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
