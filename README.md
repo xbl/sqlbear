@@ -6,3 +6,26 @@
 
 目前支持 MYSQL、POSTGRESQL ，ORACLE 由于 Docker Image 太大😓 还有没有测试，从经验来看应该没问题，后面回去测试。
 
+
+
+
+
+### 下载 JRE 
+
+如果你已经安装了 JDK 并配置好了 `$JAVA_HOME` ，这步可直接跳过。
+
+因为本工具使用 Java 开发，所以少不了 Java 的运行环境，通过下面的链接下载您所需要的版本。
+
+https://adoptopenjdk.net/installation.html?variant=openjdk13&jvmVariant=hotspot#x64_win-jre
+
+将下载后的文件解压到项目目录，同时修改 Jre 的路径使其为：`jre/bin/` ，sqlbear 脚本会在 `jre/bin/` 找到可运行的 `java` 命令。
+
+验证是否配置正确：
+
+```shell
+./jre/bin/java -version
+```
+
+
+
+后续为了方便用户使用，我们会将 Jre 打到发布包里。
