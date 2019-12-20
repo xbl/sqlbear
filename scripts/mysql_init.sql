@@ -10,10 +10,13 @@ CREATE TABLE `order` (
 
 CREATE TABLE `product` (
   `product_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(11) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `name` varchar(200) COLLATE utf8_bin NOT NULL DEFAULT '',
   PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `product` (`name`) VALUES ('Sony 降噪豆');
 
 select * from `product`;
+
+Drop TABLE `order`
+Drop TABLE `product`;
