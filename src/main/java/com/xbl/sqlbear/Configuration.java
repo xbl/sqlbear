@@ -2,11 +2,16 @@ package com.xbl.sqlbear;
 
 import com.xbl.sqlbear.util.DbDriverMapper;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 public class Configuration {
     private String url;
     private String user;
     private String password;
     private String driver;
+    private String scripts;
 
     public static String CONFIG_FOLDER = "./config";
 
@@ -59,6 +64,14 @@ public class Configuration {
         this.driver = driver;
     }
 
+    public void setScripts(String scripts) {
+        this.scripts = scripts;
+    }
+
+    public String getScripts() {
+        return scripts;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Configuration configuration = (Configuration)obj;
@@ -74,6 +87,12 @@ public class Configuration {
                     .append("url:").append(this.url).append(",")
                     .append("user:").append(this.user).append(",")
                     .append("password:").append(this.password).append(",")
-                    .append("driver:").append(this.driver).toString();
+                    .append("driver:").append(this.driver).append(",")
+                    .append("scripts:").append(this.scripts).toString();
+    }
+
+    public static InputStream getInputStreamByConf() throws FileNotFoundException {
+        String configFile = CONFIG_FOLDER + "/sqlbear.conf";
+        return new FileInputStream(configFile);
     }
 }
