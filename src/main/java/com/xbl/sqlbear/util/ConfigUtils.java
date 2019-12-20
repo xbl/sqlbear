@@ -18,10 +18,13 @@ public class ConfigUtils {
         String user = properties.getProperty("sqlbear.user");
         String password = properties.getProperty("sqlbear.password");
         String driver = properties.getProperty("sqlbear.driver");
+        String scripts = properties.getProperty("sqlbear.scripts");
 
+        Configuration configuration = new Configuration(url, user, password, driver);
         if (driver == null || "".equals(driver)) {
-            return new Configuration(url, user, password);
+            configuration = new Configuration(url, user, password);
         }
-        return new Configuration(url, user, password, driver);
+        configuration.setScripts(scripts);
+        return configuration;
     }
 }
