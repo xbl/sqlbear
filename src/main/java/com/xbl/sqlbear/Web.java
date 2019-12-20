@@ -7,14 +7,12 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 
 public class Web {
 
     private final static String prefix = "/sqlbear/";
+    private final static int port = 3000;
 
     public static void main(String args[]) throws FileNotFoundException {
         Configuration configuration = ConfigUtils.load(Configuration.getInputStreamByConf());
@@ -34,6 +32,7 @@ public class Web {
                 String chunk = excuteSql(configuration, sqlFilePath);
                 response.end(chunk);
             } catch (Exception e) {
+                e.printStackTrace();
                 response.setStatusCode(500);
                 response.end(e.toString());
             }
@@ -45,16 +44,16 @@ public class Web {
             response.end("Wecome to Sqlbear!");
         });
 
-        server.requestHandler(router).listen(8080);
+        server.requestHandler(router).listen(port);
+        System.out.println("SQL bear Server http://localhost:" + port);
     }
 
     private static String excuteSql(Configuration configuration, String sqlFilePath) throws Exception {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        StringWriter out = new StringWriter();
         PrintWriter writer = new PrintWriter(out);
         Core core = new Core(writer, configuration);
         // web 与 命令行不同，web 必须限定在配置的 scripts 目录中的脚本
         core.executeSqlFile(configuration.getScripts() + File.separator + sqlFilePath);
-        writer.close();
         return out.toString();
     }
 }

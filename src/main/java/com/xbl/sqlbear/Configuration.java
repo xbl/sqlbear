@@ -11,7 +11,7 @@ public class Configuration {
     private String user;
     private String password;
     private String driver;
-    private String scripts;
+    private String scripts = "./scripts";
 
     public static String CONFIG_FOLDER = "./config";
 

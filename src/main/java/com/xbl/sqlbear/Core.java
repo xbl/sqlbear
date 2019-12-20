@@ -27,11 +27,12 @@ public class Core {
             fileReader = new FileReader(sqlFilePath);
         } catch (FileNotFoundException e) {
             exit("未找到 SQL 文件：" + sqlFilePath);
+            return ;
         }
         ScriptRunner runner = new ScriptRunner(getConnection());
+        runner.setLogWriter(writer);
         runner.runScript(fileReader);
         runner.closeConnection();
-        runner.setLogWriter(writer);
     }
 
     private Connection getConnection() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
