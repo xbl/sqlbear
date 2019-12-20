@@ -1,7 +1,5 @@
 package com.xbl.sqlbear;
 
-import com.xbl.sqlbear.Configuration;
-import com.xbl.sqlbear.Core;
 import com.xbl.sqlbear.util.ConfigUtils;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
