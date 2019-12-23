@@ -10,22 +10,42 @@
 
 
 
-### 下载 JRE 
+SQL bear 是用于在命令行和 web 执行SQL的工具，使用 PostMan 做接口测试时，需要执行 SQL，并 PostMan 本身并没有相应的工具或者接口。
 
-如果你已经安装了 JDK 并配置好了 `$JAVA_HOME` ，这步可直接跳过。
+1. 下载
 
-因为本工具使用 Java 开发，所以少不了 Java 的运行环境，通过下面的链接下载您所需要的版本。
-
-https://adoptopenjdk.net/installation.html?variant=openjdk13&jvmVariant=hotspot#x64_win-jre
-
-将下载后的文件解压到项目目录，同时修改 Jre 的路径使其为：`jre/bin/` ，sqlbear 脚本会在 `jre/bin/` 找到可运行的 `java` 命令。
-
-验证是否配置正确：
-
-```shell
-./jre/bin/java -version
-```
+   https://github.com/xbl/sqlbear-starter/releases
+   
+   找到 `Latest release` 标签，下载相应的 zip包
 
 
+2. 在 drivers 目录添加相应的数据库驱动，drivers 已经包含了大部分常用的驱动。
 
-后续为了方便用户使用，我们会将 Jre 打到发布包里。
+3. 在 config/sqlbear.conf 添加数据库链接配置；
+
+4. 执行
+
+   在命令行中执行 SQL：
+
+   ```shell
+   sqlbear ./scripts/mysql_init.sql
+   ```
+
+   或者
+
+   在 web 中执行 SQL:
+
+   ```shell
+   sqlbear-web
+   ```
+
+
+
+## web 执行SQL
+
+web 执行的前缀为 `sqlbear`
+
+ `http://localhost:8080/sqlbear/[sql文件名].sql`
+
+SQL 文件必须放到 scripts 目录下才能被访问并执行。
+
