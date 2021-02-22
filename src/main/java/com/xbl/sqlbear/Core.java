@@ -1,6 +1,5 @@
 package com.xbl.sqlbear;
 
-import com.xbl.sqlbear.util.ConfigUtils;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 import java.io.*;
@@ -13,42 +12,48 @@ import static com.xbl.sqlbear.util.Output.error;
 
 public class Core {
 
-    private PrintWriter writer;
+    private PrintWriter logWriter;
     private Configuration configuration;
+    private PrintWriter errorWriter;
 
-    public Core(PrintWriter writer, Configuration configuration) {
-        this.writer = writer;
+    public Core(PrintWriter logWriter, Configuration configuration, PrintWriter errorWriter) {
+        this.logWriter = logWriter;
         this.configuration = configuration;
+        this.errorWriter = errorWriter;
     }
 
-    public void executeSqlFile(String sqlFilePath) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public void executeSqlFile(String sqlFilePath) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, FileNotFoundException, SQLException {
         FileReader fileReader = null;
         try {
             fileReader = new FileReader(sqlFilePath);
         } catch (FileNotFoundException e) {
             exit("未找到 SQL 文件：" + sqlFilePath);
-            return ;
+            throw e;
         }
         ScriptRunner runner = new ScriptRunner(getConnection());
-        runner.setLogWriter(writer);
+        runner.setLogWriter(logWriter);
         runner.runScript(fileReader);
+        runner.setErrorLogWriter(errorWriter);
         runner.closeConnection();
     }
 
-    private Connection getConnection() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    private Connection getConnection() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, SQLException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Class.forName(configuration.getDriver(), true, classLoader).getDeclaredConstructor().newInstance();
 
         // 创建一个数据源
         try {
-            return DriverManager.getConnection(configuration.getUrl(), configuration.getUser(), configuration.getPassword());
+            Connection connection = DriverManager.getConnection(configuration.getUrl(), configuration.getUser(), configuration.getPassword());
+            connection.setAutoCommit(true);
+            return connection;
         } catch (SQLException e) {
             exit("数据库链接失败！");
+            throw e;
         }
-        return null;
     }
 
     private void exit(String message) {
-        writer.println(error(message));
+        errorWriter.println(error(message));
+        errorWriter.flush();
     }
 }

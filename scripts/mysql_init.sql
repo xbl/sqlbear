@@ -1,4 +1,4 @@
-CREATE DATABASE `orders` DEFAULT CHARACTER SET = `utf8` DEFAULT COLLATE = `utf8_bin`;
+-- CREATE DATABASE `orders` DEFAULT CHARACTER SET = `utf8` DEFAULT COLLATE = `utf8_bin`;
 
 CREATE TABLE `order` (
   `order_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -18,5 +18,5 @@ INSERT INTO `product` (`name`) VALUES ('Sony 降噪豆');
 
 select * from `product`;
 
-Drop TABLE `order`
+Drop TABLE `order`;
 Drop TABLE `product`;

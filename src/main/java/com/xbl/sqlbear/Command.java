@@ -11,7 +11,7 @@ public class Command {
 
         try {
             Configuration configuration = ConfigUtils.load(Configuration.getInputStreamByConf());
-            Core core = new Core(new PrintWriter(System.out), configuration);
+            Core core = new Core(new PrintWriter(System.out), configuration, new PrintWriter(System.err));
             core.executeSqlFile(sqlFilePath);
         } catch (Exception e) {
             e.printStackTrace();

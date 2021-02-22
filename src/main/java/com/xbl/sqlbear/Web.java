@@ -51,7 +51,7 @@ public class Web {
     private static String excuteSql(Configuration configuration, String sqlFilePath) throws Exception {
         StringWriter out = new StringWriter();
         PrintWriter writer = new PrintWriter(out);
-        Core core = new Core(writer, configuration);
+        Core core = new Core(writer, configuration, writer);
         // web 与 命令行不同，web 必须限定在配置的 scripts 目录中的脚本
         core.executeSqlFile(configuration.getScripts() + File.separator + sqlFilePath);
         return out.toString();

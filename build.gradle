@@ -3,12 +3,19 @@ plugins {
 }
 
 group 'sqlbear'
-version '0.2'
+version '0.2.1'
 
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+}
+
+sourceSets {
+    integrationTest {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
 }
 
 dependencies {
@@ -20,6 +27,21 @@ dependencies {
     compile 'io.vertx:vertx-web:3.8.4'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+task integrationTest(type: Test) {
+    description = 'Run integration tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+}
+
+check.dependsOn integrationTest
 
 // build all compile dependence jar in jar
 jar {
