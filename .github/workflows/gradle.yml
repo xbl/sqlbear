@@ -17,7 +17,7 @@ jobs:
         ./gradlew test
     - name: Build with Gradle
       run: |
-        ./gradlew build
+        ./gradlew build -x test
     - name: Build Jar with Gradle
       run: |
         ./gradlew jar
